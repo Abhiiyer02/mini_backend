@@ -31,7 +31,7 @@ class OpenElective(models.Model):
     
 class Course(models.Model):
     course_code = models.CharField(max_length=7,primary_key=True)
-    branch = models.TextChoices(max_length=4, choices=BRANCH_CHOICES)
+    branch = models.CharField(max_length=4, choices=BRANCH_CHOICES)
     course_name = models.TextField(max_length=30)
     maxCap = models.IntegerField(default=60)
     buffer = models.IntegerField(default=0)
@@ -49,7 +49,7 @@ class Response(models.Model):
     name = models.CharField(max_length=50)
     sem = models.IntegerField()
     sec = models.CharField(max_length=1, null=True, blank=True)
-    branch = models.TextChoices(max_length=4, choices=BRANCH_CHOICES)
+    branch = models.CharField(max_length=4, choices=BRANCH_CHOICES)
     email = models.EmailField(unique=True)
     oe = models.ForeignKey(OpenElective, related_name='oe', on_delete=models.CASCADE)
     CGPA = models.DecimalField(max_digits=3, decimal_places=2)

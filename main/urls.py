@@ -7,10 +7,11 @@ from . import views
 router = SimpleRouter()
 router.register('openelective', views.OpenElectiveViewSet, basename='openelective')
 
-nest_router = NestedSimpleRouter(router, 'openelective')
-nest_router.register('courselist', views.CourseViewSet, basename='courselist')
-nest_router.register('responses', views.ResponseViewSet, basename='responses')
+# nest_router = NestedSimpleRouter(router, 'openelective')
+router.register('openelective/<str:pk>/courselist', views.CourseViewSet, basename='courselist')
+router.register('openelective/<str:pk>/responses', views.ResponseViewSet, basename='responses')
 
 urlpatterns = [
-    
+    path('', include(router.urls)),
+    # path('', include(nest_router.urls)),
 ]

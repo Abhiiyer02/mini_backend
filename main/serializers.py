@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import OpenElctive, Course, Response
+from .models import OpenElective, Course, Response
 
 class OpenElectiveSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OpenElctive
+        model = OpenElective
         fields = '__all__'
 
 class CourseSerializer(serializers.ModelSerializer):

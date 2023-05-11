@@ -66,7 +66,7 @@ class Student(User):
         # ("","Engineering"),
     ]    
     USN = models.CharField(max_length=15, primary_key=True)
-    branch = models.TextChoices(max_length=4, choices=BRANCH_CHOICES)
+    branch = models.CharField(max_length=4, choices=BRANCH_CHOICES)
     # Create a TextChoice List of Branches
 
     USERNAME_FIELD = 'USN'

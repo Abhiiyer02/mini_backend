@@ -7,20 +7,24 @@ from .serializers import OpenElectiveSerializer, CourseSerializer, ResponseSeria
 # Create your views here.
 
 class OpenElectiveViewSet(viewsets.ModelViewSet):
-    permission_classes = [ permissions.IsAuthenticated ]
+    # permission_classes = [ permissions.IsAuthenticated ]
     queryset = OpenElective.objects.all()
     serializer_class = OpenElectiveSerializer
 
 class CourseViewSet(viewsets.ModelViewSet):
-    permission_classes = [ permissions.IsAuthenticated ]
+    # permission_classes = [ permissions.IsAuthenticated ]
+    queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
 class ResponseViewSet(viewsets.ModelViewSet):
-    permission_classes = [ permissions.IsAuthenticated ]
+    # permission_classes = [ permissions.IsAuthenticated ]
     queryset = Response.objects.all()
     serializer_class = ResponseSerializer
 
 class ResultViewSet(viewsets.ModelViewSet):
-    permission_classes = [ permissions.IsAuthenticated ]
-
+    # permission_classes = [ permissions.IsAuthenticated ]
+    queryset = Response.objects.all()
     serializer_class = ResultSerializer    
+
+    # def get_queryset(self):
+    #     oe_key = self.request.path.split('/')
