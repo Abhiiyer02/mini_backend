@@ -70,5 +70,5 @@ class Student(User):
     # Create a TextChoice List of Branches
 
     USERNAME_FIELD = 'USN'
-    REQUIRED_FIELDS = ['email', 'first_name', 'phone_no', 'branch']
+    REQUIRED_FIELDS = ['email', 'first_name', 'phone_no', 'branch', 'username']
  
