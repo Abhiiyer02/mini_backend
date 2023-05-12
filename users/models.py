@@ -4,51 +4,73 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserM
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
-class UserManager(BaseUserManager):
-    def create_superuser(self, email, username, first_name, password, **other_fields):
-        other_fields.setdefault('is_staff', True)
-        other_fields.setdefault('is_active', True)
-        other_fields.setdefault('is_superuser', True)
+# class UserManager(BaseUserManager):
+#     def create_superuser(self, email, username, first_name, password, **other_fields):
+#         other_fields.setdefault('is_staff', True)
+#         other_fields.setdefault('is_active', True)
+#         other_fields.setdefault('is_superuser', True)
 
-        if other_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must be assigned to is_staff=True.')
-        if other_fields.get('is_superuser') is not True:
-            raise ValueError(
-                'Superuser must be assigned to is_superuser=True.')
+#         if other_fields.get('is_staff') is not True:
+#             raise ValueError('Superuser must be assigned to is_staff=True.')
+#         if other_fields.get('is_superuser') is not True:
+#             raise ValueError(
+#                 'Superuser must be assigned to is_superuser=True.')
 
-        return self.create_user(email, username, first_name, password, **other_fields)
+#         return self.create_user(email, username, first_name, password, **other_fields)
 
-    def create_user(self, email, username, first_name, password, **other_fields):
-        if not email:
-            raise ValueError(_('You must provie an email address'))
+#     def create_user(self, email, username, first_name, password, **other_fields):
+#         if not email:
+#             raise ValueError(_('You must provie an email address'))
 
+#         email = self.normalize_email(email)
+#         user = self.model(email=email, username=username,
+#                           first_name=first_name, **other_fields)
+#         user.set_password(password)
+#         user.save()
+#         return user
+#rama I'm back
+#rama
+
+
+# class User(AbstractUser, PermissionsMixin):
+
+#     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
+#     email = models.EmailField(_('email address'), unique=True)
+#     first_name = models.CharField(max_length=150, null=True, blank=True)
+#     last_name = models.CharField(max_length=150, null=True, blank=True)
+#     phone_no = PhoneNumberField(unique=True)
+#     is_staff = models.BooleanField(default=False)
+#     is_active = models.BooleanField(default=False)
+
+#     objects = UserManager()
+
+#     USERNAME_FIELD = 'email'
+#     REQUIRED_FIELDS = ['username']
+
+#     def __str__(self):
+#         return "{}".format(self.email)
+
+class CustomUserManager(BaseUserManager):
+    use_in_migrations = True
+
+    def _create_user(self, User_ID, username, email, password, is_staff, is_superuser, **extra_fields):
+        # Creates and saves a User with the given username, email and password.
+        now = timezone.now()
+        if not User_ID:
+            raise ValueError('The given User_ID must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username,
-                          first_name=first_name, **other_fields)
+        user = self.model(User_ID=User_ID, username=username, email=email,     is_staff=is_staff, is_active=True, is_superuser=is_superuser, date_joined=now, **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
+    def create_user(self, User_ID, username, email, password=None, **extra_fields):
+        return self._create_user(User_ID, username, email, password, False, False,**extra_fields)
 
-class User(AbstractUser, PermissionsMixin):
+    def create_superuser(self, User_ID, username, email, password, **extra_fields):
+        return self._create_user(User_ID, username, email, password, True, True,**extra_fields)
 
-    username = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150, blank=True)
-    phone_no = PhoneNumberField(unique=True)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
-
-    objects = UserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name']
-
-    def __str__(self):
-        return "{}".format(self.email)
-
-class Student(User):
+class CustomUser(AbstractUser):
     BRANCH_CHOICES = [
         ("CSE","Coputer Science and Engineering"),
         ("ISE","Information Science Engineering"),
@@ -65,10 +87,11 @@ class Student(User):
         ("EV","Environmental Engineering"),
         # ("","Engineering"),
     ]    
-    USN = models.CharField(max_length=15, primary_key=True)
-    branch = models.CharField(max_length=4, choices=BRANCH_CHOICES)
-    # Create a TextChoice List of Branches
+    User_ID = models.CharField(max_length=15, primary_key=True, unique=True)
+    branch = models.CharField(max_length=4, choices=BRANCH_CHOICES, default='Administration')
 
-    USERNAME_FIELD = 'USN'
-    REQUIRED_FIELDS = ['email', 'first_name', 'phone_no', 'branch', 'username']
- 
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'User_ID'
+    REQUIRED_FIELDS = ['email', 'username']
+    #list_display = ("username", "email", "first_name", "last_name", "is_staff")

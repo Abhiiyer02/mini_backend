@@ -84,7 +84,7 @@ SIMPLE_JWT = {
 
     "AUTH_HEADER_TYPES": ("Bearer", 'JWT'),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "USER_ID_FIELD": "id",
+    "USER_ID_FIELD": "User_ID",
     "USER_ID_CLAIM": "user_id",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
 
@@ -186,4 +186,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.Student'
+AUTH_USER_MODEL = 'users.CustomUser'
