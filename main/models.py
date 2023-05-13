@@ -38,7 +38,7 @@ class Course(models.Model):
     oe = models.ForeignKey(OpenElective, on_delete=models.CASCADE, default=None) 
 
     def __str__(self):
-        return f'{self.course_code} - {self.course_name}'
+        return f'{self.course_code}  {self.course_name}'
         
         
 # NOTE
@@ -66,6 +66,6 @@ class Response(models.Model):
     alloted = models.CharField(max_length=60)
     
     def __str__(self):
-        return self.USN , self.alloted
+        return f'{self.USN} {self.alloted}'
  
     

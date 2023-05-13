@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -88,10 +88,9 @@ class CustomUser(AbstractUser):
         # ("","Engineering"),
     ]    
     User_ID = models.CharField(max_length=15, primary_key=True, unique=True)
-    branch = models.CharField(max_length=4, choices=BRANCH_CHOICES, default='Administration')
+    branch = models.CharField(max_length=15, choices=BRANCH_CHOICES, default='Administration')
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'User_ID'
     REQUIRED_FIELDS = ['email', 'username']
-    #list_display = ("username", "email", "first_name", "last_name", "is_staff")

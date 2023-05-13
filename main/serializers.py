@@ -24,7 +24,7 @@ class ResponseSerializer(serializers.ModelSerializer):
             'name',
             'sem',
             'sec',
-            'branch'
+            'branch',
             'email',
             'CGPA',
             'pref1', 'pref2', 'pref3', 'pref4', 'pref5', 'pref6', 'pref7', 'pref8', 'pref9', 'pref10',
