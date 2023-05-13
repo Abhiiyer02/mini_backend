@@ -2,7 +2,7 @@ import os
 from django.db import models
 
 BRANCH_CHOICES = [
-        ("CSE","Coputer Science and Engineering"),
+        ("CSE","Computer Science and Engineering"),
         ("ISE","Information Science Engineering"),
         ("ECE","Electronics and Communication Engineering"),
         ("CV","Civil Engineering"),
@@ -41,6 +41,7 @@ class Course(models.Model):
         return f'{self.course_code}  {self.course_name}'
         
         
+        
 # NOTE
 # The idea was to make USN the primary key of responses but student was later inlcuded in the user models. 
 # So whenever a student is submitting his/her preferneces , the USN ie the username/user_id is to be extracted from the api refesh/access token and is to be stored in the response table as the PK
@@ -64,8 +65,8 @@ class Response(models.Model):
     pref9 = models.CharField(max_length=60)
     pref10 = models.CharField(max_length=60)
     alloted = models.CharField(max_length=60)
-    
+    class Meta: 
+        unique_together=[['USN','oe']]
     def __str__(self):
         return f'{self.USN} {self.alloted}'
  
-    

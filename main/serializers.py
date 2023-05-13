@@ -14,6 +14,7 @@ class CourseSerializer(serializers.ModelSerializer):
             'course_name',
             'branch',
             'maxCap',
+            'oe',
         )
 
 class ResponseSerializer(serializers.ModelSerializer):
@@ -38,7 +39,7 @@ class ResultSerializer(serializers.ModelSerializer):
             'name',
             'sem',
             'sec',
-            'branch'
+            'branch',
             'CGPA',
             'pref1', 'pref2', 'pref3', 'pref4', 'pref5', 'pref6', 'pref7', 'pref8', 'pref9', 'pref10',
             'alloted',
