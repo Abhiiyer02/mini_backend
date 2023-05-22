@@ -244,6 +244,10 @@ if __name__ == "__main__":
     Studs.sort(key = lambda Stud: Stud.CGPA,reverse=True)
 
     StartAllotment()
+    
+    while CheckCourse30() == True :
+        StartAllotment()
+    
     Studs=sorted(Studs,key = lambda Stud: Stud.USN)                
                   
     res = op.Workbook()
